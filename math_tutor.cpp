@@ -15,8 +15,12 @@ Description:  The functions for the math tutor program that matches the prototyp
 #include <limits>   // used for the numeric_limits
 #include <vector>   // needed for the use of vectors in the program
 #include <iomanip>  // Needed to use the setw
+#include <fstream>  // for reading and writing to a file
+#include <stdexcept> // for throwing errors back to main
 
 using namespace std;
+
+const string FILE_NAME = "mathtutor.txt";
 
 /*
  1. Displays the intro to the game, including math facts, the header, and the
@@ -329,4 +333,45 @@ void DisplaySummaryReport(const vector<vector<int>> &questions, int correctNum, 
     cout << "   Total Incorrect: " << setw(4) << right << incorrectNum << endl;
     cout << "   Average Correct: " << setw(4) << right << ((correctNum * 100) / questions.size()) << "%" << endl;
 
+}
+
+
+//DOCUMENT THIS
+
+void SaveCurrentGame(string userName, const vector<vector<int>> &mathQuestions)
+{
+    string userInput = "?";
+    ofstream outFS;
+
+    userInput = YesNoQuestion(userName + ", do you want save your game? (y=yes | n=no): ");
+
+    if (userInput == "n" || userInput == "no") {
+        cout << "Save game cancelled." << endl;
+        return;
+        }
+
+    cout << "\tPlease wait, saving game..." << endl;
+
+    outFS.open(FILE_NAME);
+
+    if (!outFS.is_open()) {
+       throw runtime_error("Unable to open " + FILE_NAME);
+    }
+
+    //code for loop
+    for (int i = 0; i < mathQuestions.size(); i++) {
+        outFS << mathQuestions.at(i).at(0) << " "
+              << mathQuestions.at(i).at(1) << " "
+              << mathQuestions.at(i).at(2) << " "
+              << mathQuestions.at(i).at(3) << " "
+              << mathQuestions.at(i).at(4) << " "
+              << mathQuestions.at(i).at(5) << endl;
+        //end of for loop
+    }
+
+    outFS.close();
+
+    cout << "Save game completed sucessfully!!";
+    cout << "\t" << mathQuestions.size() << " saved.";
+    return;
 }

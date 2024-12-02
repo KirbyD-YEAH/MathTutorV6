@@ -26,6 +26,7 @@ bool GiveThreeAttempts(int correctAns, int leftNum, char mathSymbol, int rightNu
 void CheckForLevelChange(int &correctNum, int &incorrectNum, int &mathLevel, int &questionRange);
 string YesNoQuestion(string question);
 void DisplaySummaryReport(const vector<vector<int>> &questions, int correctNum, int incorrectNum);
+void SaveCurrentGame(string userName, const vector<vector<int>> &mathQuestions);
 
 
 #endif //MATH_TUTOR_H

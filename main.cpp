@@ -96,6 +96,13 @@ int main() {
 
    DisplaySummaryReport(questions, correctNum, incorrectNum); //This call displays the function containing the summary report
 
+    try {
+            SaveCurrentGame(userName, questions);
+    } catch (runtime_error &e) {
+            cout << e.what() << endl;
+            cout << "Sorry, unable to save the game." << endl;
+    }
+
     // The end of program message
     // Used the '|' for a border for first and last sections
     cout << endl;
