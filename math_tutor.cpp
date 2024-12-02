@@ -257,11 +257,11 @@ void CheckForLevelChange(int &correctNum, int &incorrectNum, int &mathLevel, int
  4. This function asks the user if they want to play again and accepts responses such as y, yes, n, or no. It only takes
  these listed answers as an answer.
 */
-    string AskToPlayAgain(string userName) {
+    string YesNoQuestion(string question) {
         string userInput = "?";
         // validates y, yes, n, no
         while (true) {
-            cout << "Do you want to continue (y=yes | n=no)? " << endl;
+            cout << question << endl;
             getline(cin, userInput);
             cout << endl;
 

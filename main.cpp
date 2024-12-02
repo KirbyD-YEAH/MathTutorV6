@@ -90,7 +90,7 @@ int main() {
 
         getline(cin, userInput); // clearing the newline from the input buffer
 
-        userInput = AskToPlayAgain(userName); //Calls the function that asks the user if they'd like to play again
+        userInput = YesNoQuestion(userName + ", do you want to continue (y=yes | n=no)?"); //Calls the function that asks the user if they'd like to play again
 
     } while (userInput == "yes" || userInput == "y");
 

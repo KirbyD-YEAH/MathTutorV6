@@ -24,7 +24,7 @@ vector<int> GenerateRandomQuestion(int mathLevel);
 int GetNumericValue();
 bool GiveThreeAttempts(int correctAns, int leftNum, char mathSymbol, int rightNum, int NUM_ATTEMPT, int &correctNum, int &incorrectNum, vector<int> &row);
 void CheckForLevelChange(int &correctNum, int &incorrectNum, int &mathLevel, int &questionRange);
-string AskToPlayAgain(string userName);
+string YesNoQuestion(string question);
 void DisplaySummaryReport(const vector<vector<int>> &questions, int correctNum, int incorrectNum);
 
 
