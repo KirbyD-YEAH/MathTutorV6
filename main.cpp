@@ -50,16 +50,16 @@ int main() {
     string userInput = " ";
     int leftNum = 0;
     int rightNum = 0;
-    
+
     //Used to determine if user got the question correct
     int correctAns = 0;
     //Used to keep track of total correct and wrong answers the user has gotten
     int correctNum = 0;
     int incorrectNum = 0;
 
-        vector<int> row;
+    vector<int> row;
 
-    vector<vector<int>> questions; //Declares the vector for use in the program
+    vector<vector<int> > questions; //Declares the vector for use in the program
 
 
     //The srand() and time restart the rand() so the numbers and equation sign are different everytime
@@ -69,29 +69,32 @@ int main() {
 
     userName = GitUserName(); //This call contains the function to get the user's name
 
-        try {
-                mathLevel = LoadPreviousGame(userName, questions);
-        } catch (runtime_error &e) {
-                cout << endl;
-                cout << e.what() << endl;
-        }
-
-
+    try {
+        mathLevel = LoadPreviousGame(userName, questions);
+    } catch (runtime_error &e) {
+        cout << endl;
+        cout << e.what() << endl;
+    }
 
 
     /*start of do while for the main part of the code. Also contains the function call to generate a random question
      Also contains the code needed for the GiveThreeAttempts to work correctly */
 
     do {
-
-        row = GenerateRandomQuestion(mathLevel);
+        try {
+            row = GenerateRandomQuestion(mathLevel);
+        } catch (runtime_error &e) {
+            cout << endl;
+            cout << e.what() << endl;
+        }
         leftNum = row[1];
         mathSymbol = static_cast<char>(row[2]);
         rightNum = row[3];
         correctAns = row[4];
 
-        if (!GiveThreeAttempts(userName, correctAns, leftNum, mathSymbol, rightNum, NUM_ATTEMPT, correctNum, incorrectNum, row)) {
-           row.push_back(0);
+        if (!GiveThreeAttempts(userName, correctAns, leftNum, mathSymbol, rightNum, NUM_ATTEMPT, correctNum,
+                               incorrectNum, row)) {
+            row.push_back(0);
         }
 
         questions.push_back(row); //Ends the 2D vector "questions"
@@ -101,17 +104,18 @@ int main() {
 
         getline(cin, userInput); // clearing the newline from the input buffer
 
-        userInput = YesNoQuestion(userName + ", do you want to continue (y=yes | n=no)?"); //Calls the function that asks the user if they'd like to play again
-
+        userInput = YesNoQuestion(userName + ", do you want to continue (y=yes | n=no)?");
+        //Calls the function that asks the user if they'd like to play again
     } while (userInput == "yes" || userInput == "y");
 
-   DisplaySummaryReport(questions, correctNum, incorrectNum); //This call displays the function containing the summary report
+    DisplaySummaryReport(questions, correctNum, incorrectNum);
+    //This call displays the function containing the summary report
 
     try {
-            SaveCurrentGame(userName, questions);
+        SaveCurrentGame(userName, questions);
     } catch (runtime_error &e) {
-            cout << e.what() << endl;
-            cout << "Sorry, unable to save the game." << endl;
+        cout << e.what() << endl;
+        cout << "Sorry, unable to save the game." << endl;
     }
 
     // The end of program message
@@ -138,10 +142,3 @@ int main() {
             << endl;
     return 0; //ends the program how it should with a 0
 }
-
-
-
-
-
-
-

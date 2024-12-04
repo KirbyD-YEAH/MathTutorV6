@@ -57,14 +57,30 @@ void DisplayGameIntro() {
 
     //questions go here
     cout << "Fun Math Facts:" << endl;
-    cout << " * There is no roman numeral for zero.                                                                                  " << endl;
-    cout << " * There is an infinite amount of numbers between every number we normally use.                                         " << endl;
-    cout << " * The symbol for division is also known as Obelus.                                                                     " << endl;
-    cout << " * 42 is the answer to life, the universe and everything according to Douglas Adam's Hitchhiker's Guide to the Galaxy.  " << endl;
-    cout << " * Math was invented by John Math in the year 1 when he decided to figure out what came after one.                      " << endl;
-    cout << " * If you put the numbers 8 and 7 next to each other and turn your head to the left it will make a plague doctor mask.  " << endl;
-    cout << " * The word 'one' is the only number that is spelled in descending order.                                               " << endl;
-    cout << " * There are at least two people in the world who knows what 6 + 9 + 6 * 9 equals.                                      " << endl;
+    cout <<
+            " * There is no roman numeral for zero.                                                                                  "
+            << endl;
+    cout <<
+            " * There is an infinite amount of numbers between every number we normally use.                                         "
+            << endl;
+    cout <<
+            " * The symbol for division is also known as Obelus.                                                                     "
+            << endl;
+    cout <<
+            " * 42 is the answer to life, the universe and everything according to Douglas Adam's Hitchhiker's Guide to the Galaxy.  "
+            << endl;
+    cout <<
+            " * Math was invented by John Math in the year 1 when he decided to figure out what came after one.                      "
+            << endl;
+    cout <<
+            " * If you put the numbers 8 and 7 next to each other and turn your head to the left it will make a plague doctor mask.  "
+            << endl;
+    cout <<
+            " * The word 'one' is the only number that is spelled in descending order.                                               "
+            << endl;
+    cout <<
+            " * There are at least two people in the world who knows what 6 + 9 + 6 * 9 equals.                                      "
+            << endl;
     cout << endl;
     cout << "------------------------------------------------------------------------" << endl;
     return;
@@ -114,8 +130,8 @@ vector<int> GenerateRandomQuestion(int mathLevel) {
     switch (mathType) {
         case MT_ADD: //Addition
             mathSymbol = '+';
-        correctAns = leftNum + rightNum;
-        break;
+            correctAns = leftNum + rightNum;
+            break;
         case MT_SUB: //Subtraction
             if (leftNum < rightNum) {
                 temp = leftNum;
@@ -125,26 +141,24 @@ vector<int> GenerateRandomQuestion(int mathLevel) {
             } else {
                 correctAns = leftNum - rightNum;
             }
-        mathSymbol = '-';
-        break;
+            mathSymbol = '-';
+            break;
         case MT_MUL: //Multiplication
             correctAns = leftNum * rightNum;
-        mathSymbol = '*';
-        break;
+            mathSymbol = '*';
+            break;
         case MT_DIV: //Division
             correctAns = leftNum;
-        leftNum *= rightNum;
-        mathSymbol = 246; // This number outputs the divide symbol
-        break;
+            leftNum *= rightNum;
+            mathSymbol = 246; // This number outputs the divide symbol
+            break;
         default: // If an error occurs, this lets the user know who to contact
             cout << "Invalid Question Type: " << mathType << endl;
-        cout << "Program terminated. Error -1" << endl;
-        cout << "Please contact Kirby Dunker. " << endl;
-        exit(-1);
+            cout << "Please contact Kirby Dunker. " << endl;
+            throw runtime_error("Invalid Math Type: " + mathType);
     } //End of switch
 
     //Declares and initializes  the vector
-
     return {mathLevel, leftNum, mathSymbol, rightNum, correctAns};
 }
 
@@ -174,7 +188,8 @@ int GetNumericValue() {
  4. This fucntion presents a question and gives the user three attempts. If correct,
  correct amount is incremented and if not, the correct answer is revealed
 */
-bool GiveThreeAttempts(string userName, int correctAns, int leftNum, char mathSymbol, int rightNum, int NUM_ATTEMPT, int &correctNum, int &incorrectNum, vector<int> &row) {
+bool GiveThreeAttempts(string userName, int correctAns, int leftNum, char mathSymbol, int rightNum, int NUM_ATTEMPT,
+                       int &correctNum, int &incorrectNum, vector<int> &row) {
     int userAns = 0;
     bool isCorrect = false;
     int mathLevel = 1;
@@ -258,28 +273,30 @@ void CheckForLevelChange(int &correctNum, int &incorrectNum, int &mathLevel, int
  4. This function asks the user if they want to play again and accepts responses such as y, yes, n, or no. It only takes
  these listed answers as an answer.
 */
-    string YesNoQuestion(string question) {
-        string userInput = "?";
-        // validates y, yes, n, no
-        while (true) {
-            cout << question << endl;
-            getline(cin, userInput);
+string YesNoQuestion(string question) {
+    string userInput = "?";
+    // validates y, yes, n, no
+    while (true) {
+        cout << question << endl;
+        getline(cin, userInput);
+        cout << endl;
+
+
+        //to lower case the user's input
+        for (int i = 0; i < userInput.size(); i++) {
+            userInput.at(i) = tolower(userInput.at(i)); //include ctype library for tolower
+        }
+
+        if (userInput == "y" || userInput == "yes" || userInput == "n" || userInput == "no") {
+            break;
+        } else {
+            cout << "Invalid input, please try again... " << endl << endl;
             cout << endl;
+        } // end of if (y, yes, n, no)
+    } // end of inner while loop to validated y, yes, n, no
+    return userInput;
+}
 
-
-            //to lower case the user's input
-            for (int i = 0; i < userInput.size(); i++) {
-                userInput.at(i) = tolower(userInput.at(i)); //include ctype library for tolower
-            }
-
-            if (userInput == "y" || userInput == "yes" || userInput == "n" || userInput == "no") {
-                break;
-            } else {
-                cout << "Invalid input, please try again... " << endl << endl;
-                cout << endl;
-            } // end of if (y, yes, n, no)
-        } // end of inner while loop to validated y, yes, n, no
-        return userInput; }
 /*
  1. Displays a summary of how the user did. Number of correct and incorrect.
  2. Parameters include questions, correctNum, and incorrectNum
@@ -287,7 +304,7 @@ void CheckForLevelChange(int &correctNum, int &incorrectNum, int &mathLevel, int
  4. This function contains the code needed to display a detailed summary on how the user did including the level of the
  question, the question itself, number of attempts, total correct and incorrect, and the average of how they did.
 */
-void DisplaySummaryReport(const vector<vector<int>> &questions, int correctNum, int incorrectNum){
+void DisplaySummaryReport(const vector<vector<int> > &questions, int correctNum, int incorrectNum) {
     int mathLevel = 0;
     int leftNum = 0;
     char mathSymbol = '?';
@@ -312,7 +329,7 @@ void DisplaySummaryReport(const vector<vector<int>> &questions, int correctNum, 
         correctAns = questions.at(i).at(4);
         attempts = questions.at(i).at(5);
         cout << "                   " << setw(2) << right << mathLevel << "       "
-               << setw(4) << right << leftNum << " " << mathSymbol << " " << setw(4) << left << rightNum;
+                << setw(4) << right << leftNum << " " << mathSymbol << " " << setw(4) << left << rightNum;
 
         if (attempts != 0) {
             cout << "         " << attempts << endl;
@@ -329,14 +346,12 @@ void DisplaySummaryReport(const vector<vector<int>> &questions, int correctNum, 
     cout << "   Total Correct  : " << setw(4) << right << correctNum << endl;
     cout << "   Total Incorrect: " << setw(4) << right << incorrectNum << endl;
     cout << "   Average Correct: " << setw(4) << right << ((correctNum * 100) / questions.size()) << "%" << endl;
-
 }
 
 
 //DOCUMENT THIS
 
-void SaveCurrentGame(string userName, const vector<vector<int>> &questions)
-{
+void SaveCurrentGame(string userName, const vector<vector<int> > &questions) {
     string userInput = "?";
     ofstream outFS;
 
@@ -345,24 +360,24 @@ void SaveCurrentGame(string userName, const vector<vector<int>> &questions)
     if (userInput == "n" || userInput == "no") {
         cout << "Save game cancelled." << endl;
         return;
-        }
+    }
 
     cout << "\tPlease wait, saving game..." << endl;
 
     outFS.open(FILE_NAME);
 
     if (!outFS.is_open()) {
-       throw runtime_error("Unable to open " + FILE_NAME);
+        throw runtime_error("Unable to open " + FILE_NAME);
     }
 
     //code for loop
     for (int i = 0; i < questions.size(); i++) {
         outFS << questions.at(i).at(0) << " "
-              << questions.at(i).at(1) << " "
-              << questions.at(i).at(2) << " "
-              << questions.at(i).at(3) << " "
-              << questions.at(i).at(4) << " "
-              << questions.at(i).at(5) << endl;
+                << questions.at(i).at(1) << " "
+                << questions.at(i).at(2) << " "
+                << questions.at(i).at(3) << " "
+                << questions.at(i).at(4) << " "
+                << questions.at(i).at(5) << endl;
         //end of for loop
     }
 
@@ -372,7 +387,7 @@ void SaveCurrentGame(string userName, const vector<vector<int>> &questions)
     cout << "\t" << questions.size() << " saved.";
 }
 
-int LoadPreviousGame(string userName, vector<vector<int>> &questions) {
+int LoadPreviousGame(string userName, vector<vector<int> > &questions) {
     ifstream inFS;
     string userInput = "?";
 
@@ -401,14 +416,13 @@ int LoadPreviousGame(string userName, vector<vector<int>> &questions) {
     cout << "Loading game, please wait..." << endl;
 
 
-        while (inFS >> mathLevel >> leftNum >> mathSymbol >> rightNum >> correctAns >> attempts) {
-            vector<int> question = {mathLevel, leftNum, mathSymbol, rightNum, correctAns, attempts};
-            questions.push_back(question);
-        }
-        cout << "Game loaded successfully!!!!" << endl;
+    while (inFS >> mathLevel >> leftNum >> mathSymbol >> rightNum >> correctAns >> attempts) {
+        vector<int> question = {mathLevel, leftNum, mathSymbol, rightNum, correctAns, attempts};
+        questions.push_back(question);
+    }
+    cout << "Game loaded successfully!!!!" << endl;
     cout << "Successfully loaded " << questions.size() << " questions from " << FILE_NAME << endl;
 
     inFS.close();
     return mathLevel;
 }
-

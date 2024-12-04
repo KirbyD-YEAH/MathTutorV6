@@ -19,14 +19,24 @@ Description:  This is the header file that contains the prototypes for the funct
 using namespace std;
 
 void DisplayGameIntro();
+
 string GitUserName();
+
 vector<int> GenerateRandomQuestion(int mathLevel);
+
 int GetNumericValue();
-bool GiveThreeAttempts(string userName, int correctAns, int leftNum, char mathSymbol, int rightNum, int NUM_ATTEMPT, int &correctNum, int &incorrectNum, vector<int> &row);
+
+bool GiveThreeAttempts(string userName, int correctAns, int leftNum, char mathSymbol, int rightNum, int NUM_ATTEMPT,
+                       int &correctNum, int &incorrectNum, vector<int> &row);
+
 void CheckForLevelChange(int &correctNum, int &incorrectNum, int &mathLevel, int &questionRange);
+
 string YesNoQuestion(string question);
-void DisplaySummaryReport(const vector<vector<int>> &questions, int correctNum, int incorrectNum);
-void SaveCurrentGame(string userName, const vector<vector<int>> &questions);
-int LoadPreviousGame(string userName, vector<vector<int>> &questions);
+
+void DisplaySummaryReport(const vector<vector<int> > &questions, int correctNum, int incorrectNum);
+
+void SaveCurrentGame(string userName, const vector<vector<int> > &questions);
+
+int LoadPreviousGame(string userName, vector<vector<int> > &questions);
 
 #endif //MATH_TUTOR_H
