@@ -8,7 +8,7 @@ GitHub URL:  https://github.com/KirbyD-YEAH/MathTutorV6.git
 Description:  The functions for the math tutor program that matches the prototypes
 **************************************************************************************/
 
-
+#include "math_tutor.h"
 #include <iostream> // This allows the programmer the use of cins and couts
 #include <string>   // needed for the user's name
 #include <cstdlib>  // used for the random number generator
@@ -77,7 +77,7 @@ void DisplayGameIntro() {
  4. This function asks the user for their name, reads the input, and returns the name as a string.
 */
 string GitUserName() {
-    string userName = "Barry Bluejeans";
+    string userName = "?";
     // Prompt the user for their name
     cout << "What is your name: ";
     getline(cin, userName);
@@ -174,13 +174,10 @@ int GetNumericValue() {
  4. This fucntion presents a question and gives the user three attempts. If correct,
  correct amount is incremented and if not, the correct answer is revealed
 */
-bool GiveThreeAttempts(int correctAns, int leftNum, char mathSymbol, int rightNum, int NUM_ATTEMPT, int &correctNum, int &incorrectNum, vector<int> &row) {
+bool GiveThreeAttempts(string userName, int correctAns, int leftNum, char mathSymbol, int rightNum, int NUM_ATTEMPT, int &correctNum, int &incorrectNum, vector<int> &row) {
     int userAns = 0;
     bool isCorrect = false;
     int mathLevel = 1;
-
-    string userName = "unknown";
-
     //These are the variables needed for the program to work
 
 
@@ -338,7 +335,7 @@ void DisplaySummaryReport(const vector<vector<int>> &questions, int correctNum, 
 
 //DOCUMENT THIS
 
-void SaveCurrentGame(string userName, const vector<vector<int>> &mathQuestions)
+void SaveCurrentGame(string userName, const vector<vector<int>> &questions)
 {
     string userInput = "?";
     ofstream outFS;
@@ -359,19 +356,59 @@ void SaveCurrentGame(string userName, const vector<vector<int>> &mathQuestions)
     }
 
     //code for loop
-    for (int i = 0; i < mathQuestions.size(); i++) {
-        outFS << mathQuestions.at(i).at(0) << " "
-              << mathQuestions.at(i).at(1) << " "
-              << mathQuestions.at(i).at(2) << " "
-              << mathQuestions.at(i).at(3) << " "
-              << mathQuestions.at(i).at(4) << " "
-              << mathQuestions.at(i).at(5) << endl;
+    for (int i = 0; i < questions.size(); i++) {
+        outFS << questions.at(i).at(0) << " "
+              << questions.at(i).at(1) << " "
+              << questions.at(i).at(2) << " "
+              << questions.at(i).at(3) << " "
+              << questions.at(i).at(4) << " "
+              << questions.at(i).at(5) << endl;
         //end of for loop
     }
 
     outFS.close();
 
     cout << "Save game completed sucessfully!!";
-    cout << "\t" << mathQuestions.size() << " saved.";
-    return;
+    cout << "\t" << questions.size() << " saved.";
 }
+
+int LoadPreviousGame(string userName, vector<vector<int>> &questions) {
+    ifstream inFS;
+    string userInput = "?";
+
+    int mathLevel = 1;
+    int leftNum = 0;
+    int rightNum = 0;
+    int correctAns = 0;
+    int attempts = 0;
+    int mathSymbol = 0;
+
+    inFS.open(FILE_NAME);
+
+    if (!inFS.is_open()) {
+        cout << "File not found. Good luck with your new game!" << endl;
+        return mathLevel;
+    }
+
+    userInput = YesNoQuestion("Would you like to load your previous game? (y=yes | n=no): ");
+
+    if (userInput == "n" || userInput == "no") {
+        cout << "Game not loaded. Starting a new game." << endl;
+        inFS.close();
+        return mathLevel;
+    }
+
+    cout << "Loading game, please wait..." << endl;
+
+
+        while (inFS >> mathLevel >> leftNum >> mathSymbol >> rightNum >> correctAns >> attempts) {
+            vector<int> question = {mathLevel, leftNum, mathSymbol, rightNum, correctAns, attempts};
+            questions.push_back(question);
+        }
+        cout << "Game loaded successfully!!!!" << endl;
+    cout << "Successfully loaded " << questions.size() << " questions from " << FILE_NAME << endl;
+
+    inFS.close();
+    return mathLevel;
+}
+

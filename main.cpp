@@ -46,8 +46,8 @@ int main() {
     int mathLevel = 1;
 
     //These are the variables needed for the program to work
-    string userName = "unknown";
-    string userInput = "";
+    string userName = "?";
+    string userInput = " ";
     int leftNum = 0;
     int rightNum = 0;
     
@@ -65,7 +65,16 @@ int main() {
 
     DisplayGameIntro(); //This call displays the game intro
 
-    GitUserName(); //This call contains the function to get the user's name
+    userName = GitUserName(); //This call contains the function to get the user's name
+
+        try {
+                mathLevel = LoadPreviousGame(userName, questions);
+        } catch (runtime_error &e) {
+                cout << endl;
+                cout << e.what() << endl;
+        }
+
+
 
 
     /*start of do while for the main part of the code. Also contains the function call to generate a random question
@@ -79,7 +88,7 @@ int main() {
         rightNum = row[3];
         correctAns = row[4];
 
-        if (!GiveThreeAttempts(correctAns, leftNum, mathSymbol, rightNum, NUM_ATTEMPT, correctNum, incorrectNum, row )) {
+        if (!GiveThreeAttempts(userName, correctAns, leftNum, mathSymbol, rightNum, NUM_ATTEMPT, correctNum, incorrectNum, row)) {
            row.push_back(0);
         }
 
