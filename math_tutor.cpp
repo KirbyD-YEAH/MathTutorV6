@@ -348,9 +348,14 @@ void DisplaySummaryReport(const vector<vector<int> > &questions, int correctNum,
     cout << "   Average Correct: " << setw(4) << right << ((correctNum * 100) / questions.size()) << "%" << endl;
 }
 
-
-//DOCUMENT THIS
-
+/*
+ 1. Prompts users on if they want to save their current game. If the user chooses to do so, the funciton writes data to
+ the mathtutor.txt file.
+ 2. Parameters are userName which is a string and questions which is a 2D vector
+ 3. Returns the mathLevel
+ 4. This function prompts for save confirmation, aborts if the user cancels, opens the file for saving, saves game data,
+ closes the file, and gives a confirmation message
+ */
 void SaveCurrentGame(string userName, const vector<vector<int> > &questions) {
     string userInput = "?";
     ofstream outFS;
@@ -387,6 +392,14 @@ void SaveCurrentGame(string userName, const vector<vector<int> > &questions) {
     cout << "\t" << questions.size() << " saved.";
 }
 
+/*
+ 1. This function attempts to load a previously saved game from a file and then asks the user if they'd like to load any
+ saved data.
+ 2. Parameters include userName and the questions vector.
+ 3. Returns mathLevel
+ 4. The function opens the file for reading, promprts for loading the game, aborts the load operation if the user says
+ no and loads game data if yes, closes the file, and displays a success message.
+ */
 int LoadPreviousGame(string userName, vector<vector<int> > &questions) {
     ifstream inFS;
     string userInput = "?";
