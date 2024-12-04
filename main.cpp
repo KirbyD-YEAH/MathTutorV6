@@ -57,6 +57,8 @@ int main() {
     int correctNum = 0;
     int incorrectNum = 0;
 
+        vector<int> row;
+
     vector<vector<int>> questions; //Declares the vector for use in the program
 
 
@@ -82,7 +84,7 @@ int main() {
 
     do {
 
-        vector<int> row = GenerateRandomQuestion(mathLevel);
+        row = GenerateRandomQuestion(mathLevel);
         leftNum = row[1];
         mathSymbol = static_cast<char>(row[2]);
         rightNum = row[3];
